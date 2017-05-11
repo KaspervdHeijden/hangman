@@ -12,4 +12,4 @@ class HelloWorldController extends Controller
             'Hello world!'
         );
     }
-} 
+}
