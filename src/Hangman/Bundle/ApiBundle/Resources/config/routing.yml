@@ -6,4 +6,6 @@ hangman_api_game_start:
 hangman_api_game_guess:
     path:     /game/{id}
     defaults: { _controller: HangmanApiBundle:Hangman:gameGuess }
-    methods:  [GET]
+    methods:  [PUT]
+    requirements:
+        id: '\d+'

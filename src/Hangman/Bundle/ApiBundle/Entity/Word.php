@@ -5,9 +5,8 @@ namespace Hangman\Bundle\ApiBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Game class.
- *
- * @author KasH.
+ * Word entity class.
+ * 
  * @ORM\Entity(repositoryClass="Hangman\Bundle\ApiBundle\Repository\WordRepository")
  */
 class Word
@@ -30,7 +29,7 @@ class Word
 	
     /**
      * Get id
-     *
+     * 
      * @return int
      */
     public function getId() : int

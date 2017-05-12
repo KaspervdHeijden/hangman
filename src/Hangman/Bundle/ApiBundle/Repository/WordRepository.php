@@ -5,16 +5,16 @@ namespace Hangman\Bundle\ApiBundle\Repository;
 use Doctrine\ORM\EntityRepository;
 
 /**
- * Wordrepository class.
- *
+ * WordRepository class. Extends the default doctrine entity repository.
+ * 
  * @author KasH.
  */
 class WordRepository extends EntityRepository
 {
 	/**
-     * Get random words
-     *
-     * @return array
+     * Get a random word.
+     * 
+     * @return string
      */
 	public function findRandomWord()
 	{
@@ -30,10 +30,6 @@ class WordRepository extends EntityRepository
 				->getQuery()
 				->getResult();
 		
-		if (empty($words)) {
-			return '';
-		} else {
-			return $words[0]['word'];
-		}
+		return (empty($words)) ? '' : $words[0]['word'];
 	}
 }

@@ -6,22 +6,24 @@ namespace Hangman\Bundle\ApiBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Game class.
- *
- * @author KasH.
+ * Game entity class.
+ * 
  * @ORM\Entity
  */
 class Game
 {
+	/**
+	 * Any characetr which is not yet guessed is replaced by this character (a dot). 
+	 */
 	const REPLACE_CHAR = '.';
 	
 	/**
-	 * Maximum number of tries.
+	 * Maximum number of tries before you hang :).
 	 */
 	const MAX_TRIES = 10;
 	
 	/**
-	 * Game Stati.
+	 * Game stati: busy/fail/success.
 	 */
 	const STATUS_SUCCESS = 'success';
 	const STATUS_BUSY = 'busy';
@@ -37,8 +39,8 @@ class Game
     private $id;
 	
 	/**
-	 *
 	 * @var int
+	 * 
 	 * @ORM\Column(name="tries_left", type="integer")
 	 */
 	private $triesLeft = self::MAX_TRIES;
@@ -53,9 +55,9 @@ class Game
 	/**
 	 * @var string
 	 * 
-	 * @ORM\Column(name="characters_guessed", type="text")
+	 * @ORM\Column(name="characters_guessed", type="json_array")
 	 */
-	private $characters_guessed = '';
+	private $characters_guessed = array();
 	
 	/**
 	 * @var string
@@ -65,8 +67,8 @@ class Game
 	private $status = self::STATUS_BUSY;
 	
     /**
-     * Get id
-     *
+     * Get the id.
+     * 
      * @return int
      */
     public function getId() : int
@@ -75,7 +77,7 @@ class Game
     }
 	
 	/**
-	 * Gets tries left
+	 * Gets the number of tries left.
 	 * 
 	 * @return int
 	 */
@@ -85,7 +87,7 @@ class Game
 	}
 	
 	/**
-	 * Decrement the tries left.
+	 * Decrement the number of tries left.
 	 * 
 	 * @return Game
 	 */
@@ -96,7 +98,7 @@ class Game
 	}
 	
 	/**
-	 * Get word
+	 * Get the word.
 	 * 
 	 * @return string
 	 */
@@ -106,7 +108,7 @@ class Game
 	}
 	
 	/**
-	 * Set the word
+	 * Set the word.
 	 * 
 	 * @param string $word
 	 * @return Game
@@ -122,31 +124,32 @@ class Game
 	 * 
 	 * @return array
 	 */
-	public function getGuessedCharacters() : array
+	public function getCharacters_guessed() : array
 	{
-		return json_decode($this->characters_guessed);
+		return $this->characters_guessed;
 	}
 	
 	/**
-	 * Add A character to the guessed characters list.
+	 * Adds a character to the guessed characters list.
 	 * 
 	 * @param string $character
 	 * @return \Hangman\Bundle\ApiBundle\Entity\Game
 	 */
 	public function addGuessedCharacter(string $character) : Game
 	{
-		$characters = $this->getGuessedCharacters();
-		if (!in_array($character, $characters)) {
-			$characters[] = $character;
+		if (!$this->isCharacterAlreadyGuessed($character)) {
+			$this->characters_guessed[] = $character;
 		}
 		
-		$this->characters_guessed = json_encode($characters);
 		return $this;
 	}
 	
 	/**
-	 * Get status
+	 * Get the game status (busy/fail/succes)
 	 * 
+	 * @see Game::STATUS_BUSY
+	 * @see Game::STATUS_FAIL
+	 * @see Game::STATUS_SUCCESS
 	 * @return string
 	 */
 	public function getStatus() : string
@@ -155,7 +158,7 @@ class Game
 	}
 	
 	/**
-	 * Set status
+	 * Sets the game status.
 	 * 
 	 * @param string $status
 	 * @return \Hangman\Bundle\ApiBundle\Entity\Game
@@ -167,12 +170,39 @@ class Game
 	}
 	
 	/**
-	 * Gets the version of the word with all non guessed characters replaced with dots.
+	 * Determines if a character was already guessed.
 	 * 
+	 * @param string $character
+	 * @return bool
+	 */
+	public function isCharacterAlreadyGuessed(string $character) : bool
+	{
+		return in_array($character, $this->getCharacters_guessed());
+	}
+	
+	/**
+	 * Gets the version of the word with all non-guessed characters obvuscated.
+	 * 
+	 * @see Game::REPLACE_CHAR
 	 * @return string
 	 */
-	public function getScrambledWord() : string
+	public function getWordObvuscated() : string
 	{
-		return str_replace($this->getGuessedCharacters(), self::REPLACE_CHAR, $this->getWord());
+		$characters_guessed = $this->getCharacters_guessed();
+		$word = $this->getWord();
+		$len = strlen($word);
+		$result = '';
+		
+		for ($i = 0; $i < $len; ++$i) {
+			$char = $word[$i];
+			
+			if (in_array($char, $characters_guessed)) {
+				$result .= $char;
+			} else {
+				$result .= self::REPLACE_CHAR;
+			}
+		}
+		
+		return $result;
 	}
 }
