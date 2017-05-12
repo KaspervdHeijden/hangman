@@ -13,17 +13,19 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Game
 {
+	const REPLACE_CHAR = '.';
+	
 	/**
 	 * Maximum number of tries.
 	 */
 	const MAX_TRIES = 10;
 	
 	/**
-	 * Game Stati. Unused for now.
+	 * Game Stati.
 	 */
-	const STATUS_INITIALIZED = 'Initialized';
-	const STATUS_PLAYING = 'Playing';
-	const STATUS_OVER = 'Over';
+	const STATUS_SUCCESS = 'success';
+	const STATUS_BUSY = 'busy';
+	const STATUS_FAIL = 'fail';
 	
 	/**
      * @var int
@@ -60,7 +62,7 @@ class Game
 	 * 
 	 * @ORM\Column(name="status", length=255)
 	 */
-	private $status = '';
+	private $status = self::STATUS_BUSY;
 	
     /**
      * Get id
@@ -83,14 +85,13 @@ class Game
 	}
 	
 	/**
-	 * Sets name
+	 * Decrement the tries left.
 	 * 
-	 * @param int $triesLeft
 	 * @return Game
 	 */
-	public function setTriesLeft(int $triesLeft) : Game
+	public function decrementTriesLeft() : Game
 	{
-		$this->triesLeft = $triesLeft;
+		--$this->triesLeft;
 		return $this;
 	}
 	
@@ -117,24 +118,29 @@ class Game
 	}
 	
 	/**
-	 * Get the guessed words
+	 * Get the guessed characters.
 	 * 
-	 * @return string
+	 * @return array
 	 */
-	public function getCharacters_guessed() : string
+	public function getGuessedCharacters() : array
 	{
-		return $this->characters_guessed;
+		return json_decode($this->characters_guessed);
 	}
 	
 	/**
-	 * Set the guessed words
+	 * Add A character to the guessed characters list.
 	 * 
-	 * @param string $characters_guessed
-	 * @return Game
+	 * @param string $character
+	 * @return \Hangman\Bundle\ApiBundle\Entity\Game
 	 */
-	public function setCharacters_guessed(string $characters_guessed) : Game
+	public function addGuessedCharacter(string $character) : Game
 	{
-		$this->characters_guessed = $characters_guessed;
+		$characters = $this->getGuessedCharacters();
+		if (!in_array($character, $characters)) {
+			$characters[] = $character;
+		}
+		
+		$this->characters_guessed = json_encode($characters);
 		return $this;
 	}
 	
@@ -158,5 +164,15 @@ class Game
 	{
 		$this->status = $status;
 		return $this;
+	}
+	
+	/**
+	 * Gets the version of the word with all non guessed characters replaced with dots.
+	 * 
+	 * @return string
+	 */
+	public function getScrambledWord() : string
+	{
+		return str_replace($this->getGuessedCharacters(), self::REPLACE_CHAR, $this->getWord());
 	}
 }

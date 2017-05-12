@@ -1,0 +1,7 @@
+# app/config/services.yml
+services:
+    # keep your service names short
+    app.game_engine:
+        class: Hangman\Bundle\ApiBundle\Service\GameEngine
+        arguments:
+               entityManager: "@doctrine.orm.entity_manager"

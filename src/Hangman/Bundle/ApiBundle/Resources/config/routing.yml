@@ -1,9 +1,9 @@
-hangman_api_hello_world:
-    path:     /hello/world
-    defaults: { _controller: HangmanApiBundle:HelloWorld:helloWorld }
-    methods:  [GET]
-  
-hangman_api_rest_api:
+hangman_api_game_start:
     path:     /games
-    defaults: { _controller: HangmanApiBundle:HangmanREST:gameStart }
+    defaults: { _controller: HangmanApiBundle:Hangman:gameStart }
     methods:  [POST]
+
+hangman_api_game_guess:
+    path:     /game/{id}
+    defaults: { _controller: HangmanApiBundle:Hangman:gameGuess }
+    methods:  [GET]
