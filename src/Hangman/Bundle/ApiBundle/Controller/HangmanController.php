@@ -27,6 +27,7 @@ class HangmanController extends Controller
 			'tries_left' => $game->getTriesLeft(),
 			'word' => $game->getWordObvuscated(),
 			'status' => $game->getStatus(),
+			'game_id' => $game->getId(),
 			'message' => $message
 		));
 	}
@@ -108,7 +109,7 @@ class HangmanController extends Controller
 		}
 		
 		if ($game->getStatus() !== Game::STATUS_BUSY) {
-			return $this->generateResponseError('Requested is over.', 400); // Returns a 400 Bad Request.
+			return $this->generateResponseError('The requested game is over!', 400); // Returns a 400 Bad Request.
 		}
 		
 		$putData = $this->getPutVars($request);
@@ -116,9 +117,13 @@ class HangmanController extends Controller
 			return $this->generateResponseError('Please guess a character.', 400); // Returns a 400 Bad Request.
 		}
 		
-		$char = $putData['char'];
+		$char = strtolower($putData['char']);
 		if (strlen($char) !== 1) {
 			return $this->generateResponseError('Please only guess one character.', 400); // Returns a 400 Bad Request.
+		}
+		
+		if (!preg_match('/[a-z]/', $char)) {
+			return $this->generateResponseError('Please guess a character between a-z.', 400); // Returns a 400 Bad Request.
 		}
 		
 		$message = $this->get('app.game_engine')

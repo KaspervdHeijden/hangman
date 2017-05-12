@@ -1,7 +1,0 @@
-- When installing dependencies with composer, I could not install "doctrine/doctrine-migrations-bundle": "2.1.*@dev".
-  I had to change it to "doctrine/doctrine-migrations-bundle": "1.1.1" to get it to work.
-
-- Preferably, I would install a bundle (friendsofsymfony/rest-bundle) to optimize the REST server.
-  Sadly, the bundle is not compatible with this symfony project version (It requires 2.7).
-
-- Initially, I presumed PHP 7.1. The varous type hints were commented out to support PHP 5.3.
