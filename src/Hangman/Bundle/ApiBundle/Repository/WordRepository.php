@@ -16,7 +16,7 @@ class WordRepository extends EntityRepository
      * 
      * @return string
      */
-	public function findRandomWord()
+	public function findRandomWord() // : string
 	{
 		$num_words = $this->createQueryBuilder('w')
              ->select('COUNT(w)')

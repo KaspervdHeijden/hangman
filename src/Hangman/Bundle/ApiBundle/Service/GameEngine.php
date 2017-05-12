@@ -28,7 +28,7 @@ class GameEngine
 	 * @param Game $game
 	 * @return void
 	 */
-	private function saveGame(Game $game) : void
+	private function saveGame(Game $game) // : void
 	{
 		$this->em->persist($game);
 		$this->em->flush();
@@ -41,7 +41,7 @@ class GameEngine
 	 * @param string $char
 	 * @return string A description about the guess and Game status.
 	 */
-	public function guessCharacter(Game $game, string $char) : string
+	public function guessCharacter(Game $game, /*string*/ $char) // : string
 	{
 		if ($game->getStatus() !== Game::STATUS_BUSY) {
 			return 'Game over.';

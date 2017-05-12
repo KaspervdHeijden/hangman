@@ -17,16 +17,18 @@ class HangmanController extends Controller
 	 * Generates a success response.
 	 * 
 	 * @param Game $game
+	 * @param string $message
+	 * 
 	 * @return JsonResponse
 	 */
-	private function generateResponse(Game $game, string $message) : JsonResponse
+	private function generateResponse(Game $game, /*string*/ $message) // : JsonResponse
 	{
-		return new JsonResponse([
+		return new JsonResponse(array(
 			'tries_left' => $game->getTriesLeft(),
 			'word' => $game->getWordObvuscated(),
 			'status' => $game->getStatus(),
 			'message' => $message
-		]);
+		));
 	}
 	
 	/**
@@ -35,9 +37,9 @@ class HangmanController extends Controller
 	 * @param string $message
 	 * @return JsonResponse
 	 */
-	private function generateResponseError(string $message, int $status) : JsonResponse
+	private function generateResponseError(/*string*/ $message, /*int*/ $status) // : JsonResponse
 	{
-		return new JsonResponse(['message' => $message], $status);
+		return new JsonResponse(array('message' => $message), $status);
 	}
 	
 	/**
@@ -46,9 +48,9 @@ class HangmanController extends Controller
 	 * @param Request $request
 	 * @return array
 	 */
-	private function getPutVars(Request $request) : array
+	private function getPutVars(Request $request) // : array
 	{
-		/* Force the x-www-form-urlencoded content-type
+		/* Enforce the x-www-form-urlencoded content-type
 		$contentType = $request->headers->get('Content-Type');
 		if (empty($contentType) || strcasecmp($contentType, 'application/x-www-form-urlencoded') === 0) {
 			return array();
@@ -64,7 +66,7 @@ class HangmanController extends Controller
 	 * 
 	 * @return JsonResponse
 	 */
-	public function gameStartAction()
+	public function gameStartAction() // : JsonResponse
 	{
 		$doctrine = $this->getDoctrine();
 		
@@ -95,7 +97,7 @@ class HangmanController extends Controller
 	 * @param Request $request
 	 * @return JsonResponse
 	 */
-	public function gameGuessAction($id, Request $request)
+	public function gameGuessAction($id, Request $request) // : JsonResponse
 	{
 		$game = $this->getDoctrine()
 					->getRepository('HangmanApiBundle:Game')

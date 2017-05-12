@@ -32,7 +32,7 @@ class Word
      * 
      * @return int
      */
-    public function getId() : int
+    public function getId() // : int
     {
         return $this->id;
     }
@@ -42,7 +42,7 @@ class Word
 	 * 
 	 * @return string
 	 */
-	public function getWord() : string
+	public function getWord() // : string
 	{
 		return $this->word;
 	}
@@ -53,7 +53,7 @@ class Word
 	 * @param string $word
 	 * @return Word
 	 */
-	public function setWord(string $word) : Word
+	public function setWord(/*string*/ $word) // : Word
 	{
 		$this->word = $word;
 		return $this;
