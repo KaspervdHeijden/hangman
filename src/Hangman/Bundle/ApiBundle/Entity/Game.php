@@ -20,7 +20,7 @@ class Game
 	/**
 	 * Maximum number of tries before you hang :).
 	 */
-	/*public*/ const MAX_TRIES = 10;
+	/*public*/ const MAX_TRIES = 11;
 	
 	/**
 	 * Game stati: busy/fail/success.
