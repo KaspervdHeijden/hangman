@@ -2,7 +2,6 @@
 
 namespace Hangman\Bundle\ApiBundle\Entity;
 
-//use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
