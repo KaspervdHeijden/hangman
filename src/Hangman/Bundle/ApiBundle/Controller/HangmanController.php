@@ -51,14 +51,7 @@ class HangmanController extends Controller
 	 */
 	private function getPutVars(Request $request) // : array
 	{
-		/* Enforce the x-www-form-urlencoded content-type
-		$contentType = $request->headers->get('Content-Type');
-		if (empty($contentType) || strcasecmp($contentType, 'application/x-www-form-urlencoded') === 0) {
-			return array();
-		} //*/
-		
-		$content = $request->getContent();
-		parse_str($content, $putData);
+		parse_str($request->getContent(), $putData);
 		return $putData;
 	}
 	
