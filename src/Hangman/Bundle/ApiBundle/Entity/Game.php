@@ -14,19 +14,19 @@ class Game
 	/**
 	 * Any character which is not yet guessed is replaced by this character (typically a dot). 
 	 */
-	/*public*/ const REPLACE_CHAR = '.';
+    const REPLACE_CHAR = '.';
 	
 	/**
 	 * Maximum number of tries before you hang :).
 	 */
-	/*public*/ const MAX_TRIES = 11;
+	const MAX_TRIES = 11;
 	
 	/**
 	 * Game stati: busy/fail/success.
 	 */
-	/*public*/ const STATUS_SUCCESS = 'success';
-	/*public*/ const STATUS_BUSY = 'busy';
-	/*public*/ const STATUS_FAIL = 'fail';
+	const STATUS_SUCCESS = 'success';
+	const STATUS_BUSY = 'busy';
+	const STATUS_FAIL = 'fail';
 	
 	/**
      * @var int
@@ -56,7 +56,7 @@ class Game
 	 * 
 	 * @ORM\Column(name="characters_guessed", type="json_array")
 	 */
-	private $characters_guessed = array();
+	private $characters_guessed = [];
 	
 	/**
 	 * @var string
@@ -70,7 +70,7 @@ class Game
      * 
      * @return int
      */
-    public function getId() // : int
+    public function getId() : int
     {
         return $this->id;
     }
@@ -80,7 +80,7 @@ class Game
 	 * 
 	 * @return int
 	 */
-	public function getTriesLeft() // : int
+	public function getTriesLeft() : int
 	{
 		return $this->triesLeft;
 	}
@@ -90,7 +90,7 @@ class Game
 	 * 
 	 * @return Game
 	 */
-	public function decrementTriesLeft() // : Game
+	public function decrementTriesLeft() : Game
 	{
 		--$this->triesLeft;
 		return $this;
@@ -101,7 +101,7 @@ class Game
 	 * 
 	 * @return string
 	 */
-	public function getWord() // : string
+	public function getWord() : string
 	{
 		return $this->word;
 	}
@@ -112,7 +112,7 @@ class Game
 	 * @param string $word
 	 * @return Game
 	 */
-	public function setWord(/*string*/ $word) // : Game
+	public function setWord(string $word) : Game
 	{
 		$this->word = $word;
 		return $this;
@@ -123,7 +123,7 @@ class Game
 	 * 
 	 * @return array
 	 */
-	public function getCharacters_guessed() // : array
+	public function getCharacters_guessed() : array
 	{
 		return $this->characters_guessed;
 	}
@@ -132,9 +132,9 @@ class Game
 	 * Adds a character to the guessed characters list.
 	 * 
 	 * @param string $character
-	 * @return \Hangman\Bundle\ApiBundle\Entity\Game
+	 * @return Game
 	 */
-	public function addGuessedCharacter(/*string*/ $character) // : Game
+	public function addGuessedCharacter(string $character) : Game
 	{
 		if (!$this->isCharacterAlreadyGuessed($character)) {
 			$this->characters_guessed[] = $character;
@@ -151,7 +151,7 @@ class Game
 	 * @see Game::STATUS_SUCCESS
 	 * @return string
 	 */
-	public function getStatus() // : string
+	public function getStatus() : string
 	{
 		return $this->status;
 	}
@@ -162,7 +162,7 @@ class Game
 	 * @param string $status
 	 * @return \Hangman\Bundle\ApiBundle\Entity\Game
 	 */
-	public function setStatus(/*string*/ $status) // : Game
+	public function setStatus(string $status) : Game
 	{
 		$this->status = $status;
 		return $this;
@@ -174,7 +174,7 @@ class Game
 	 * @param string $character
 	 * @return bool
 	 */
-	public function isCharacterAlreadyGuessed(/*string*/ $character) // : bool
+	public function isCharacterAlreadyGuessed(string $character) : bool
 	{
 		return in_array($character, $this->getCharacters_guessed());
 	}
@@ -183,9 +183,9 @@ class Game
 	 * Gets the version of the word with all non-guessed characters obvuscated.
 	 * 
 	 * @see Game::REPLACE_CHAR
-	 * @return string
+	 * @return string The obvuscated word.
 	 */
-	public function getWordObvuscated() // : string
+	public function getWordObvuscated() : string
 	{
 		$characters_guessed = $this->getCharacters_guessed();
 		$word = $this->getWord();

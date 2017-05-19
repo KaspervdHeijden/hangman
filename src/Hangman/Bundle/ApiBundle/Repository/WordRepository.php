@@ -11,25 +11,25 @@ use Doctrine\ORM\EntityRepository;
  */
 class WordRepository extends EntityRepository
 {
-	/**
-     * Get a random word.
+    /**
+     * Gets a random word from the database.
      * 
      * @return string
      */
-	public function findRandomWord() // : string
-	{
-		$num_words = $this->createQueryBuilder('w')
-             ->select('COUNT(w)')
-             ->getQuery()
-             ->getSingleScalarResult();
-		
-		$words = $this->createQueryBuilder('w')
-				->select('w.word')
-				->setFirstResult(rand(0, $num_words - 1))
-				->setMaxResults(1)
-				->getQuery()
-				->getResult();
-		
-		return (empty($words)) ? '' : $words[0]['word'];
-	}
+    public function findRandomWord() : string
+    {
+        $num_words = $this->createQueryBuilder('w')
+                        ->select('COUNT(w)')
+                        ->getQuery()
+                        ->getSingleScalarResult();
+        
+        $words = $this->createQueryBuilder('w')
+                        ->select('w.word')
+                        ->setFirstResult(rand(0, $num_words - 1))
+                        ->setMaxResults(1)
+                        ->getQuery()
+                        ->getResult();
+        
+        return (empty($words)) ? '' : $words[0]['word'];
+    }
 }

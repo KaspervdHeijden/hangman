@@ -1,6 +1,6 @@
-# SIM Hangman API #
+# Simple Hangman API #
 
-In this assignment we ask you to implement a minimal version of a hangman API using the following resources below:
+This is a minimal version of a hangman API using the following resources below:
 
 ## Resources ##
 
@@ -27,19 +27,3 @@ Every response should contain the following fields:
 *tries_left*: the number of tries left to guess the word (starts at 11)
 
 *status*: current status of the game (busy|fail|success)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
