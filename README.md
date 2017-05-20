@@ -1,29 +1,25 @@
 # Simple Hangman API #
 
-This is a minimal version of a hangman API using the following resources below:
+This is a minimal version of a hangman API using the resources as mentioned below.
 
 ## Resources ##
 
 **/games (POST)**
 
-Start a new game
-
-- A list of words can be found in the MySQL database. At the start of the game a random word should be picked from this list.
+Start a new game. At the start of the game a random word should be picked from a list of words in the database.
 
 **/games/[:id] (PUT)**
 
-Guess a started game
+Guess a started game.
 
-- Guessing a correct letter doesn’t decrement the amount of tries left
-
-- Only valid characters are a-z
+- Guessing a correct letter doesn't decrement the amount of tries left.
+- Guessing a letter that has already been guessed issues a warning, but also doesn't decrement the amount of tries left.
+- Only valid characters are a-z.
 
 ## Response ##
 
 Every response should contain the following fields:
 
-*word*: representation of the word that is being guessed. Should contain dots for letters that have not been guessed yet (e.g. aw.so..)
-
-*tries_left*: the number of tries left to guess the word (starts at 11)
-
-*status*: current status of the game (busy|fail|success)
+*word*: Representation of the word that is being guessed. Contains dots for letters that have not been guessed yet.
+*tries_left*: The number of tries left to guess the word, starts at 11.
+*status*: Current status of the game (busy|fail|success).
