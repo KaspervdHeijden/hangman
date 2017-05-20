@@ -6,7 +6,7 @@ This is a minimal version of a hangman API using the resources as mentioned belo
 
 **/games (POST)**
 
-Start a new game. At the start of the game a random word should be picked from a list of words in the database.
+Start a new game. At the start of the game a random word will be picked from a list of words in the database.
 
 **/games/[:id] (PUT)**
 
