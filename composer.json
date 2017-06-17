@@ -1,5 +1,5 @@
 {
-    "name": "simple-hangman-api",
+    "name": "kash/simple-hangman-api",
     "license": "MIT",
     "type": "project",
     "description": "The \"Symfony Standard Edition\" distribution",
