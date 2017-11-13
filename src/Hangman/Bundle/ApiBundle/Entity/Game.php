@@ -11,22 +11,22 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Game
 {
-	/**
-	 * Any character which is not yet guessed is replaced by this character (typically a dot). 
-	 */
+    /**
+     * Any character which is not yet guessed is replaced by this character (typically a dot). 
+     */
     const REPLACE_CHAR = '.';
 	
-	/**
-	 * Maximum number of tries before you hang :).
-	 */
-	const MAX_TRIES = 11;
+    /**
+     * Maximum number of tries before you hang :).
+     */
+    const MAX_TRIES = 11;
 	
-	/**
-	 * Game stati: busy/fail/success.
-	 */
-	const STATUS_SUCCESS = 'success';
-	const STATUS_BUSY = 'busy';
-	const STATUS_FAIL = 'fail';
+    /**
+     * Game stati: busy/fail/success.
+     */
+    const STATUS_SUCCESS = 'success';
+    const STATUS_BUSY = 'busy';
+    const STATUS_FAIL = 'fail';
 	
 	/**
      * @var int
