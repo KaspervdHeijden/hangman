@@ -22,13 +22,13 @@ class HangmanController extends Controller
      */
     private function generateResponse(Game $game, string $message) : JsonResponse
     {
-        return new JsonResponse(array(
+        return new JsonResponse([
             'tries_left' => $game->getTriesLeft(),
             'word' => $game->getWordObvuscated(),
             'status' => $game->getStatus(),
             'game_id' => $game->getId(),
-            'message' => $message
-        ));
+            'message' => $message,
+        ]);
     }
     
     /**
@@ -39,7 +39,7 @@ class HangmanController extends Controller
      */
     private function generateResponseError(string $message, int $status) : JsonResponse
     {
-        return new JsonResponse(array('message' => $message), $status);
+        return new JsonResponse(['message' => $message], $status);
     }
     
     /**
@@ -64,15 +64,15 @@ class HangmanController extends Controller
         $doctrine = $this->getDoctrine();
         
         // We need to pick a random word
-        $random_word = $doctrine->getRepository('HangmanApiBundle:Word')
+        $randomWord = $doctrine->getRepository('HangmanApiBundle:Word')
                                 ->findRandomWord();
         
-        if (empty($random_word)) {
-            return $this->generateResponseError('No random words available!', 404); // 404 because a random word cannot be found.
+        if (!$randomWord) {
+            return $this->generateResponseError('No random words available!', 404); // 404 because a random word could not be found.
         }
         
         $game = new Game();
-        $game->setWord($random_word);
+        $game->setWord($randomWord);
         $game->setStatus(Game::STATUS_BUSY);
         
         $em = $doctrine->getManager();
@@ -104,7 +104,7 @@ class HangmanController extends Controller
         }
         
         $putData = $this->getPutVars($request);
-        if (!isset($putData['char']) || empty($putData['char'])) {
+        if (empty($putData['char'])) {
             return $this->generateResponseError('Please guess a character.', 400); // Returns a 400 Bad Request.
         }
         
