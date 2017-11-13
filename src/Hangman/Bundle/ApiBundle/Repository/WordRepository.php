@@ -14,7 +14,7 @@ class WordRepository extends EntityRepository
     /**
      * Gets a random word from the database.
      * 
-     * @return string
+     * @return string A random word.
      */
     public function findRandomWord() : string
     {
@@ -30,6 +30,6 @@ class WordRepository extends EntityRepository
                         ->getQuery()
                         ->getResult();
         
-        return (empty($words)) ? '' : $words[0]['word'];
+        return ($words) ? $words[0]['word'] : '';
     }
 }
