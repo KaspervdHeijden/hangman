@@ -15,19 +15,19 @@ class Game
      * Any character which is not yet guessed is replaced by this character (typically a dot). 
      */
     const REPLACE_CHAR = '.';
-	
+
     /**
      * Maximum number of tries before you hang :).
      */
     const MAX_TRIES = 11;
-	
+
     /**
      * Game stati: busy/fail/success.
      */
     const STATUS_SUCCESS = 'success';
     const STATUS_BUSY = 'busy';
     const STATUS_FAIL = 'fail';
-	
+
 	/**
      * @var int
      * 
@@ -36,35 +36,35 @@ class Game
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
-	
+
 	/**
 	 * @var int
 	 * 
 	 * @ORM\Column(name="tries_left", type="integer")
 	 */
 	private $triesLeft = self::MAX_TRIES;
-	
+
 	/**
 	 * @var string
 	 * 
 	 * @ORM\Column(name="word", type="string", length=255)
 	 */
 	private $word;
-	
+
 	/**
 	 * @var string
 	 * 
 	 * @ORM\Column(name="characters_guessed", type="json_array")
 	 */
 	private $characters_guessed = [];
-	
+
 	/**
 	 * @var string
 	 * 
 	 * @ORM\Column(name="status", length=255)
 	 */
 	private $status = self::STATUS_BUSY;
-	
+
     /**
      * Get the id.
      * 
@@ -74,7 +74,7 @@ class Game
     {
         return $this->id;
     }
-	
+
 	/**
 	 * Gets the number of tries left.
 	 * 
@@ -84,7 +84,7 @@ class Game
 	{
 		return $this->triesLeft;
 	}
-	
+
 	/**
 	 * Decrement the number of tries left.
 	 * 
@@ -95,7 +95,7 @@ class Game
 		--$this->triesLeft;
 		return $this;
 	}
-	
+
 	/**
 	 * Get the word.
 	 * 
@@ -105,7 +105,7 @@ class Game
 	{
 		return $this->word;
 	}
-	
+
 	/**
 	 * Set the word.
 	 * 
@@ -117,17 +117,17 @@ class Game
 		$this->word = $word;
 		return $this;
 	}
-	
+
 	/**
 	 * Get the guessed characters.
 	 * 
-	 * @return array
+	 * @return string[]
 	 */
 	public function getCharacters_guessed() : array
 	{
 		return $this->characters_guessed;
 	}
-	
+
 	/**
 	 * Adds a character to the guessed characters list.
 	 * 
@@ -139,10 +139,10 @@ class Game
 		if (!$this->isCharacterAlreadyGuessed($character)) {
 			$this->characters_guessed[] = $character;
 		}
-		
+
 		return $this;
 	}
-	
+
 	/**
 	 * Get the game status (busy/fail/succes)
 	 * 
@@ -155,19 +155,19 @@ class Game
 	{
 		return $this->status;
 	}
-	
+
 	/**
 	 * Sets the game status.
 	 * 
 	 * @param string $status
-	 * @return \Hangman\Bundle\ApiBundle\Entity\Game
+	 * @return Game
 	 */
 	public function setStatus(string $status) : Game
 	{
 		$this->status = $status;
 		return $this;
 	}
-	
+
 	/**
 	 * Determines if a character was already guessed.
 	 * 
@@ -178,7 +178,7 @@ class Game
 	{
 		return in_array($character, $this->getCharacters_guessed());
 	}
-	
+
 	/**
 	 * Gets the version of the word with all non-guessed characters obvuscated.
 	 * 
@@ -191,17 +191,17 @@ class Game
 		$word = $this->getWord();
 		$len = strlen($word);
 		$result = '';
-		
+
 		for ($i = 0; $i < $len; ++$i) {
 			$char = $word[$i];
-			
+
 			if (in_array($char, $characters_guessed)) {
 				$result .= $char;
 			} else {
 				$result .= self::REPLACE_CHAR;
 			}
 		}
-		
+
 		return $result;
 	}
 }
